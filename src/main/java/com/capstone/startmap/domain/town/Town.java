@@ -15,5 +15,5 @@ public class Town {
     private String town_name;
 
     @Column(name =  "town_sales", nullable = false)
-    private long town_sales;
+    private Long town_sales;
 }

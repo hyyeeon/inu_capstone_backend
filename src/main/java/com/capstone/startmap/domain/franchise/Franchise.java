@@ -9,7 +9,7 @@ public class Franchise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "franchise_id", nullable = false)
-    private long franchise_id;
+    private Long franchise_id;
 
     @Column(name = "franchise_name",nullable = false)
     private String franchise_name;

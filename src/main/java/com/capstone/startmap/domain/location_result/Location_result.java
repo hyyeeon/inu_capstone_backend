@@ -1,4 +1,4 @@
-package com.capstone.startmap.domain.rocation_result;
+package com.capstone.startmap.domain.location_result;
 
 import com.capstone.startmap.domain.building.Building;
 import com.capstone.startmap.domain.result.Result;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Rocation_result {
+public class Location_result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="search_id", nullable=false)
