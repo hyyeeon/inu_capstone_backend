@@ -3,13 +3,18 @@ package com.capstone.startmap.config.filereader;
 import com.capstone.startmap.domain.shop.dto.ShopDtoCSV;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Slf4j
@@ -21,8 +26,9 @@ public class CSVReader {//extends Batch<ShopDtoCSV>{
         log.info("파일읽기 시작");
         /* 파일읽기 */
         FlatFileItemReader<ShopDtoCSV> flatFileItemReader = new FlatFileItemReader<>();
-        flatFileItemReader.setResource(new ClassPathResource("csv/cafe_pack.csv"));
+        //flatFileItemReader.setResource(new ClassPathResource("csv/cafe_pack.csv"));
         flatFileItemReader.setEncoding("UTF-8"); //인코딩 설정
+        flatFileItemReader.setLinesToSkip(1);//첫줄 헤더 스킵
 
         /* defaultLineMapper: 읽으려는 데이터 LineMapper을 통해 Dto로 매핑 */
         DefaultLineMapper<ShopDtoCSV> defaultLineMapper = new DefaultLineMapper<>();
@@ -43,6 +49,5 @@ public class CSVReader {//extends Batch<ShopDtoCSV>{
         flatFileItemReader.setLineMapper(defaultLineMapper); //lineMapper 지정
 
         return flatFileItemReader;
-
     }
 }
