@@ -1,23 +1,28 @@
 package com.capstone.startmap.domain.shop;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.*;
+import com.capstone.startmap.domain.building.Building;
+import com.capstone.startmap.domain.franchise.Franchise;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
+@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 public class Shop {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "shop_id")
     private Long shop_id;
 
+    @Column(name = "shop_name")
     private String shop_name;
 
-    private Integer shop_sales;
+    @Column(name="shop_sales")
+    private int shop_sales;
 
     private Integer building_sales;
 
@@ -38,4 +43,12 @@ public class Shop {
     private Integer nearby_tourist_attractions;
 
     private Integer nearby_buildings;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "franchise_id")
+    private Franchise franchise_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    private Building building_id;
 }

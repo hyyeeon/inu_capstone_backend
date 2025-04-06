@@ -3,24 +3,26 @@ package com.capstone.startmap.domain.user;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id",nullable = false)
     private Long user_id;
 
+    @Column(name="kakao_id")
+    private String kakao_id;
+
+    @Column(name="nickname",nullable = false)
     private String nickname;
 
     private String email;
 
     private String password;
-
-    private String kakaoId;
 
     public static User of(String nickname, String email, String password) {
         User user = new User();
