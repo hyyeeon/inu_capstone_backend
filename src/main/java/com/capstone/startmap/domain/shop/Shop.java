@@ -28,4 +28,6 @@ public class Shop {
     private Building building_id;
 
 
+
+
 }

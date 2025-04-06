@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 public class ShopController {
+    public Shop showShop(Long )
 
-    public ResponseEntity<ShopResDto> ShopSearch() {
-        ShopResDto show = ShopService.search();
-
-        return new ResponseEntity<>
-    }
 }
