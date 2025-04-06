@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class CSVWriter implements ItemWriter<ShopDtoCSV> {
+public class CSVShopWriter implements ItemWriter<ShopDtoCSV> {
 
     private final ShopRepository shopRepository;
 
