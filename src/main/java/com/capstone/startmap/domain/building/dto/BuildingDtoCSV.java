@@ -52,6 +52,7 @@ public class BuildingDtoCSV {
     private Integer distance_ediya;
 
     private Integer distance_twosome;
+
     public Building toEntity() {
         return Building.builder()
                 .zone(this.zone)

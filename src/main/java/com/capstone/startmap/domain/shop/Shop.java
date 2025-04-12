@@ -3,11 +3,9 @@ package com.capstone.startmap.domain.shop;
 import com.capstone.startmap.domain.building.Building;
 import com.capstone.startmap.domain.franchise.Franchise;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Entity
 @Getter
 @AllArgsConstructor

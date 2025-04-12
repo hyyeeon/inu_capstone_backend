@@ -24,11 +24,20 @@ public class User {
 
     private String password;
 
-    public static User of(String nickname, String email, String password) {
-        User user = new User();
-        user.setNickname(nickname);
-        user.setEmail(email);
-        //User.setPassword(password);
-        return user;
+    @Builder
+    private User(String kakao_id, String nickname,
+                 String email, String password){
+        this.kakao_id=kakao_id;
+        this.nickname=nickname;
+        this.email=email;
+        this.password=password;
+    }
+    public static User of(String nickname, String email, String password, String kakao_id) {
+        return User.builder()
+                .kakao_id(kakao_id)
+                .nickname(nickname)
+                .email(email)
+                .password(password)
+                .build();
     }
 }

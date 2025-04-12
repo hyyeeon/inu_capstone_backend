@@ -1,11 +1,9 @@
 package com.capstone.startmap.domain.building;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Builder
 @Entity
 @Getter
 @AllArgsConstructor
@@ -65,4 +63,5 @@ public class Building {
     private Integer distance_ediya;
 
     private Integer distance_twosome;
+
 }
