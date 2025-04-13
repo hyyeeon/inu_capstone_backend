@@ -17,4 +17,8 @@ public class ShopResDto {
     public ShopResDto(Shop shop) {
 
     }
+
+    public static ShopResDto fromShop(Shop shop) {
+        return new ShopResDto(shop);
+    }
 }
