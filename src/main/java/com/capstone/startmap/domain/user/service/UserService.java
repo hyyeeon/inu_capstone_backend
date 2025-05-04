@@ -49,7 +49,6 @@ public class UserService {
     public LoginUserResponse login(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() ->
                 new UsernameNotFoundException("존재하지 않는 회원입니다."));
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new WrongPasswordException();
         }
@@ -65,7 +64,11 @@ public class UserService {
         String refresh = tokenProvider.createRefreshToken(authentication);
         Long accessTokenExpire = tokenProvider.getAccessTokenExpire(access).getTime();
 
+        System.out.println("authentication.getName(): " + authentication.getName());
+        System.out.println("authentication.getPrincipal(): " + authentication.getPrincipal());
+
         RefreshToken refreshEntity = new RefreshToken(refresh, authentication.getName(), user);
+        //바로 윗 줄의 authentication.getName()이 null이야
         refreshTokenRepository.save(refreshEntity);
 
         return new LoginUserResponse(authentication.getName(), user.getNickname(), access, refresh, accessTokenExpire);
@@ -90,6 +93,7 @@ public class UserService {
         } else {
             user = userRepository.save(User.of(nickname, email, password, null));
         }
+        System.out.println("\\\\\\회원가입 닉넴 이메일 pw, kkoid"+nickname+" "+email+" "+password+" "+kakaoId);
 
         return new CreateUserResponse(user.getUser_id(), user.getKakao_id(), user.getEmail(), user.getEmail());
     }

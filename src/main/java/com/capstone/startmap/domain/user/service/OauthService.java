@@ -73,6 +73,7 @@ public class OauthService {
 
     public LoginUserResponse registerOrLoginUser(KakaoProfile profile) {
         String email = "KAKAO_" + profile.getId();
+        System.out.println("이메일"+email);
         Optional<User> foundMember = userService.findUserByEmail(email);
 
         if (foundMember.isEmpty()) {
