@@ -1,10 +1,14 @@
 package com.capstone.startmap.domain.user;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +21,16 @@ public class User {
     @Column(name="nickname",nullable = false)
     private String nickname;
 
+    private String email;
 
+    private String password;
+
+    public static User of(String nickname, String email, String password, String kakao_id) {
+        return User.builder()
+                .kakao_id(kakao_id)
+                .nickname(nickname)
+                .email(email)
+                .password(password)
+                .build();
+    }
 }
