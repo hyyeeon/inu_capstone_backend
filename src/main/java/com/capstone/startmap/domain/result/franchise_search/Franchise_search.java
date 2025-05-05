@@ -1,24 +1,22 @@
-package com.capstone.startmap.domain.result;
+package com.capstone.startmap.domain.result.franchise_search;
 
 import com.capstone.startmap.domain.building.Building;
 import com.capstone.startmap.domain.franchise.Franchise;
+import com.capstone.startmap.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-import com.capstone.startmap.domain.user.User;
-import org.hibernate.annotations.Fetch;
-
 import java.time.LocalDate;
 
 @Entity
 @Getter
-public class Result {
+public class Franchise_search {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "result_id", nullable = false)
     private Long result_id;
 
-    @Column(name = "franchise_result", nullable = false)
-    private Boolean franchise_result;
+    @Column(name = "franchiseResult", nullable = false)
+    private Boolean franchiseResult;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -28,8 +26,8 @@ public class Result {
     private Franchise franchise_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user_id;
+    @JoinColumn(name = "user")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
