@@ -1,8 +1,5 @@
 package com.capstone.startmap.domain.franchise_result.api.dto;
 
-
-import com.capstone.startmap.domain.franchise.Franchise;
-import com.capstone.startmap.domain.franchise.api.dto.FranchiseResDto;
 import com.capstone.startmap.domain.franchise_result.Franchise_result;
 import com.capstone.startmap.domain.result.api.dto.ResultResDto;
 import lombok.AccessLevel;

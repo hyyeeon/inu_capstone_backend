@@ -1,6 +1,5 @@
 package com.capstone.startmap.domain.franchise_result.controller;
 
-import com.capstone.startmap.domain.franchise.service.FranchiseService;
 import com.capstone.startmap.domain.franchise_result.api.dto.FranchiseResultResDto;
 import com.capstone.startmap.domain.franchise_result.service.FranchiseResultService;
 import org.springframework.http.HttpStatus;
