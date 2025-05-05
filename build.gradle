@@ -43,8 +43,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	//Webflux
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	
 
+	//스웨거
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
 tasks.named('test') {

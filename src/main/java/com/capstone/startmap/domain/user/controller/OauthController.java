@@ -1,6 +1,6 @@
 package com.capstone.startmap.domain.user.controller;
 
-import com.capstone.startmap.config.security.jwt.JwtFilter;
+import com.capstone.startmap.config.security.jwt.JwtAuthenticationFilter;
 import com.capstone.startmap.domain.user.dto.oauth.KakaoProfile;
 import com.capstone.startmap.domain.user.dto.oauth.OAuthToken;
 import com.capstone.startmap.domain.user.dto.response.LoginUserResponse;
@@ -29,7 +29,7 @@ public class OauthController {
         LoginUserResponse response = oauthService.registerOrLoginUser(profile);
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + response.getAccessToken());
+        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + response.getAccessToken());
 
         return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }

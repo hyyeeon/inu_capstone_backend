@@ -37,30 +37,25 @@ public class SecurityConfig {
                 //csrf 토큰 없이 요청하면 해당 요청을 막음 그래서 disable
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-//                .oauth2Login(
-//                oauth2Login -> oauth2Login
-//                        .loginPage("/member/login")
-//                )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
                 //사용자 토큰 없이 접근 허용인데 나머지 요청은 인증된 사용에게만 접근 허용
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers(HttpMethod.GET, "swagger-ui.html").permitAll()
-                                .requestMatchers("/api/signup", "/api/login", "/api/refresh", "/api/kakao/callback").permitAll()
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/signup", "/api/login", "/api/refresh", "/api/kakao/callback").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-
                 .headers(headers ->
                         headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
-
+                // JwtAuthenticationFilter 등록 (JwtSecurityConfig 내부에서 처리)
                 .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
+
         return http.build();
     }
 
@@ -68,5 +63,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
