@@ -41,4 +41,3 @@ jwt:
   secret: ${jwt.secret}
   token-validity-in-seconds: ${jwt.token-validity-in-seconds}
 
-

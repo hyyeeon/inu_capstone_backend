@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateUserResponse {
 
-    private Long id;
-    private String email;
+    private Long user_id;
+    private String kakao_id;
     private String nickname;
-
+    private String email;
 }

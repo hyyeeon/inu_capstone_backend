@@ -34,17 +34,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                //csrf 토큰 없이 요청하면 해당 요청을 막음 그래서 disable
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+//                .oauth2Login(
+//                oauth2Login -> oauth2Login
+//                        .loginPage("/member/login")
+//                )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 )
-
+                //사용자 토큰 없이 접근 허용인데 나머지 요청은 인증된 사용에게만 접근 허용
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers(HttpMethod.GET, "swagger-ui.html", "/api/plans", "/api/plans/{planId}", "/api/review/{reviewId}", "/api/reviews").permitAll()
-                                .requestMatchers("/api/signup", "/api/login", "/api/refresh").permitAll()
+                                .requestMatchers(HttpMethod.GET, "swagger-ui.html").permitAll()
+                                .requestMatchers("/api/signup", "/api/login", "/api/refresh", "/api/kakao/callback").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement ->

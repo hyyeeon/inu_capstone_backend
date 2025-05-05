@@ -1,5 +1,6 @@
 package com.capstone.startmap.domain.refreshtoken;
 
+import com.capstone.startmap.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,8 +21,13 @@ public class RefreshToken {
     @Column(nullable = false)
     private String email;
 
-    public RefreshToken(String refreshToken, String email) {
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public RefreshToken(String refreshToken, String email, User user) {
         this.refreshToken = refreshToken;
         this.email = email;
+        this.user = user;
     }
 }

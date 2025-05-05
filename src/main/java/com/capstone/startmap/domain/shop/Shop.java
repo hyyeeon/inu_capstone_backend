@@ -5,6 +5,7 @@ import com.capstone.startmap.domain.franchise.Franchise;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Builder
 @Entity
 @Getter
 @AllArgsConstructor

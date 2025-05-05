@@ -51,7 +51,7 @@ public class JwtTokenProvider implements InitializingBean {
 
         return Jwts.builder()
                 .subject(authentication.getName())
-                .claim("memberId", userDetails.getId())
+                .claim("user_id", userDetails.getId())
                 .signWith((SecretKey) key, Jwts.SIG.HS512)
                 .expiration(validity)
                 .compact();
@@ -66,7 +66,7 @@ public class JwtTokenProvider implements InitializingBean {
 
         return Jwts.builder()
                 .subject(authentication.getName())
-                .claim("memberId", userDetails.getId())
+                .claim("user_id", userDetails.getId())
                 .signWith((SecretKey) key, Jwts.SIG.HS512)
                 .expiration(validity)
                 .compact();
