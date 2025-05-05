@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResultResDto {
     private Long result_id;
+    //private boolean bookmark; : figma에 없는 것 같음
     private Long franchise_id;
     private Date date;
     private Long building_id;
