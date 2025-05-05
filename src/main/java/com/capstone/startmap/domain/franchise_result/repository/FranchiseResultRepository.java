@@ -4,6 +4,9 @@ import com.capstone.startmap.domain.franchise_result.Franchise_result;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FranchiseResultRepository extends JpaRepository<Franchise_result, Long> {
+    List<Franchise_result> findAllBySearchId(Long searchId);
 }

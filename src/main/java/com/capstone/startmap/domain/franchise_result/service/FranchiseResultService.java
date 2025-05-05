@@ -7,6 +7,8 @@ import com.capstone.startmap.exception.franchise_result.NotFoundFranchiseResultE
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 
@@ -14,8 +16,11 @@ public class FranchiseResultService {
     private FranchiseResultRepository franchiseResultRepository;
 
     public FranchiseResultResDto showFranchiseResult(Long search_id) {
-        Franchise_result franchise_result = franchiseResultRepository.findById(search_id).orElseThrow(()->
-                new NotFoundFranchiseResultException("존재하지 않는 검색결과입니다."));
-        return FranchiseResultResDto.fromFranchiseResult(franchise_result);
+        List<Franchise_result> franchise_result_list = franchiseResultRepository.findAllBySearchId(search_id);
+        if (franchise_result_list.isEmpty()) {
+            throw new NotFoundFranchiseResultException("존재하지 않는 검색 결과 입니다.");
+        }
+
+        return FranchiseResultResDto.fromFranchiseResultList(franchise_result_list);
     }
 }

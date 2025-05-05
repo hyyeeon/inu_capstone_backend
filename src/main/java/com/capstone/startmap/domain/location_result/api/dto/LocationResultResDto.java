@@ -11,11 +11,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LocationResultResDto {
-    private List<ResultResDto> locationResult_list;
+    private List<LocationIndResultResDto> locationResult_list;
 
-    public LocationResultResDto(Location_result location_result) {
-
+    public LocationResultResDto(List<Location_result> locationResults) {
+        this.locationResult_list = locationResults.stream()
+                .map(LocationIndResultResDto::fromLocationResult)
+                .toList();
     }
 
-    public static LocationResultResDto fromLocationResult(Location_result location_result) { return new LocationResultResDto(location_result); }
+    public static LocationResultResDto fromLocationResultList(List<Location_result> locationResults) {
+        return new LocationResultResDto(locationResults); }
 }
