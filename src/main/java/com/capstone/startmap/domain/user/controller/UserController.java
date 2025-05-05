@@ -1,7 +1,7 @@
 package com.capstone.startmap.domain.user.controller;
 
 import com.capstone.startmap.config.CustomUserDetails;
-import com.capstone.startmap.config.security.jwt.JwtFilter;
+import com.capstone.startmap.config.security.jwt.JwtAuthenticationFilter;
 import com.capstone.startmap.domain.refreshtoken.dto.request.CreateRefreshTokenRequest;
 import com.capstone.startmap.domain.user.User;
 import com.capstone.startmap.domain.user.dto.request.CreateUserRequest;
@@ -43,7 +43,7 @@ public class UserController {
         LoginUserResponse response = userService.login(request.getEmail(), request.getPassword());
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + response.getAccessToken());
+        httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER, "Bearer " + response.getAccessToken());
 
         return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
