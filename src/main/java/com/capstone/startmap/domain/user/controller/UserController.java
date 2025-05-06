@@ -13,6 +13,8 @@ import com.capstone.startmap.domain.user.service.UserService;
 import com.capstone.startmap.util.validation.EmailGroup;
 import com.capstone.startmap.util.validation.PasswordGroup;
 import com.capstone.startmap.util.validation.RequestValidator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -26,18 +28,20 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-//@Tag(name = "User", description = "User API")
+@Tag(name = "User", description = "User API")
 public class UserController {
 
     private final UserService userService;
     private final RequestValidator requestValidator;
 
+    @Operation(summary = "자체 회원가입", description = "카카오 에러 고치다가 만든 자체 회원가입입니다.. 꼭 사용 안하셔도 됩니다")
     @PostMapping("/signup")
     public ResponseEntity<CreateUserResponse> signUp(@Valid @RequestBody CreateUserRequest request) {
         CreateUserResponse response = userService.signUp(request.getEmail(), request.getPassword(), request.getNickname(), request.getKakaoId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "로그인", description = "자체로그인시 email/pw 그대로 입력, 카카오 로그인 시 email: 카카오로그인 시 회원Id/pw: startmapINUCapstoneOauthLoginPW(고정값)")
     @PostMapping("/login")
     public ResponseEntity<LoginUserResponse> login(@RequestBody LoginUserRequest request) {
         LoginUserResponse response = userService.login(request.getEmail(), request.getPassword());
@@ -48,6 +52,7 @@ public class UserController {
         return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
+    @Operation(summary = "리프레쉬", description = "리프레쉬 토큰 발급")
     @PostMapping("/refresh")
     public ResponseEntity<LoginUserResponse> refresh(@RequestBody CreateRefreshTokenRequest request) {
         LoginUserResponse response = userService.refresh(request);
@@ -58,6 +63,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "로그아웃", description = "로그아웃")
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody CreateRefreshTokenRequest request) {
         boolean deleted = userService.deleteByToken(request.getRefreshToken());
@@ -69,6 +75,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴")
     @DeleteMapping("/delete")
     public ResponseEntity<String> delete(@RequestBody DeleteUserRequest request,
                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
