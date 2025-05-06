@@ -69,7 +69,10 @@ public class UserService {
 
         RefreshToken refreshEntity = new RefreshToken(refresh, authentication.getName(), user);
         //바로 윗 줄의 authentication.getName()이 null이야
-        refreshTokenRepository.save(refreshEntity);
+        if (!userRepository.existsById(user.getUser_id())){
+            refreshTokenRepository.save(refreshEntity);
+        }
+
 
         return new LoginUserResponse(authentication.getName(), user.getNickname(), access, refresh, accessTokenExpire);
     }

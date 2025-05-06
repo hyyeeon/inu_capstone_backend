@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginUserResponse> login(@Valid @RequestBody LoginUserRequest request) {
+    public ResponseEntity<LoginUserResponse> login(@RequestBody LoginUserRequest request) {
         LoginUserResponse response = userService.login(request.getEmail(), request.getPassword());
 
         HttpHeaders httpHeaders = new HttpHeaders();
