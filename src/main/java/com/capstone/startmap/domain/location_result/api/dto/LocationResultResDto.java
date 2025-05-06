@@ -2,6 +2,7 @@ package com.capstone.startmap.domain.location_result.api.dto;
 
 import com.capstone.startmap.domain.location_result.Location_result;
 import com.capstone.startmap.domain.result.api.dto.ResultResDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LocationResultResDto {
+
+    @Schema(description = "위치 검색 결과 개별 dto 리스트")
     private List<LocationIndResultResDto> locationResult_list;
 
     public LocationResultResDto(List<Location_result> locationResults) {

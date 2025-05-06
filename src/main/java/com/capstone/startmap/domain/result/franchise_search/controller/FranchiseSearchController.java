@@ -3,6 +3,7 @@ package com.capstone.startmap.domain.result.franchise_search.controller;
 import com.capstone.startmap.domain.franchise.api.dto.FranchiseResDto;
 import com.capstone.startmap.domain.result.franchise_search.api.dto.FranchiseSearchResDto;
 import com.capstone.startmap.domain.result.franchise_search.service.FranchiseSearchService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ public class FranchiseSearchController {
     private final FranchiseSearchService franchiseSearchService;
     public FranchiseSearchController(FranchiseSearchService franchiseSearchService) { this.franchiseSearchService = franchiseSearchService; }
 
+    @Operation(summary = "프랜차이즈 검색 결과 조회",
+            description = "userId를 이용해 사용자의 프랜차이즈 검색 결과 전체를 조회합니다.")
     @GetMapping("/mypage/franchise/{userId}")
     public ResponseEntity<List<FranchiseSearchResDto>> getFranchise(@PathVariable long userId) {
         List<FranchiseSearchResDto> franchiseSearchList = franchiseSearchService.showFranchiseSearch(userId);

@@ -20,7 +20,7 @@ spring:
       client:
         registration:
           kakao:
-            client_id: ${application-prod.yml:13}
+            client_id: ${kakao.client_id}
             redirect_uri: ${kakao.redirect_uri}
             client-secret: ${kakao.password}
             client-name: startmap

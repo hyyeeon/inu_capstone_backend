@@ -25,8 +25,8 @@ public class Franchise_result {
     private Integer rank;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "result_id")
-    private Result result_id;
+    @JoinColumn(name = "result")
+    private Result result;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id")
