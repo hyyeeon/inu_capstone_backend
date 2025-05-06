@@ -14,7 +14,7 @@ public class ShopResDto {
     private String shop_name;
 
     @Schema(description = "매장 매출액")
-    private Long shop_sales;
+    private Integer shop_sales;
 
     @Schema(description = "프랜차이즈 id")
     private Long franchise_id;
@@ -27,6 +27,12 @@ public class ShopResDto {
     }
 
     public static ShopResDto fromShop(Shop shop) {
-        return new ShopResDto(shop);
+        ShopResDto dto = new ShopResDto(shop);
+        dto.building_id = null;
+        dto.franchise_id = null;
+        dto.shop_name = shop.getShop_name();
+        dto.shop_sales = shop.getShop_sales();
+
+        return dto;
     }
 }

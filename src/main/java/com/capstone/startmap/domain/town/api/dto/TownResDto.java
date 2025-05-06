@@ -47,5 +47,20 @@ public class TownResDto {
     public TownResDto(Town town) {
 
     }
-    public static TownResDto fromTown(Town town) { return new TownResDto(town); }
+    public static TownResDto fromTown(Town town) {
+        TownResDto dto = new TownResDto(town);
+        dto.town_name = town.getTown_name();
+        dto.town_sales = town.getTown_sales();
+        dto.count_pack = town.getCount_pack();
+        dto.count_two = town.getCount_two();
+        dto.count_ediya = town.getCount_ediya();
+        dto.count_mega = town.getCount_mega();
+        dto.count_com = town.getCount_com();
+        dto.count_the = town.getCount_the();
+        dto.count_tous = town.getCount_tous();
+        dto.count_paris = town.getCount_paris();
+        dto.count_dun = town.getCount_dun();
+
+        return dto;
+    }
 }
