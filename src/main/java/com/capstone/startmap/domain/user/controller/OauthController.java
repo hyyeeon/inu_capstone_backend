@@ -6,6 +6,8 @@ import com.capstone.startmap.domain.user.dto.oauth.OAuthToken;
 import com.capstone.startmap.domain.user.dto.response.LoginUserResponse;
 import com.capstone.startmap.domain.user.service.OauthService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/kakao")
+@Tag(name = "Kakao", description = "Kakao API")
 public class OauthController {
 
     private final OauthService oauthService;
 
     @GetMapping("/callback")
+    @Operation(summary = "카카오 로그인 콜백", description = "자체 호출 함수로 사용하실 일이 없을 거예요")
     public ResponseEntity<LoginUserResponse> callback(@RequestParam String code) throws JsonProcessingException {
         OAuthToken token = oauthService.getKakaoOAuthToken(code);
         KakaoProfile profile = oauthService.getKakaoProfile(token.getAccess_token());

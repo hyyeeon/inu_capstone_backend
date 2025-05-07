@@ -17,8 +17,8 @@ public class Result {
     @Column(name = "result_id", nullable = false)
     private Long result_id;
 
-    @Column(name = "bookmark", nullable = false)
-    private Boolean bookmark;
+    @Column(name = "franchise_result", nullable = false)
+    private Boolean franchise_result;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
