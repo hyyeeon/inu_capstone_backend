@@ -23,7 +23,7 @@ public class CSVReader {
         FlatFileItemReader<ShopDtoCSV> flatFileItemReader = new FlatFileItemReader<>();
         //flatFileItemReader.setResource(new ClassPathResource("csv/cafe_pack.csv"));
         flatFileItemReader.setEncoding("UTF-8"); //인코딩 설정
-        flatFileItemReader.setLinesToSkip(1);//첫줄 헤더 스킵
+        //flatFileItemReader.setLinesToSkip(1);//첫줄 헤더 스킵
 
         /* defaultLineMapper: 읽으려는 데이터 LineMapper을 통해 Dto로 매핑 */
         DefaultLineMapper<ShopDtoCSV> defaultLineMapper = new DefaultLineMapper<>();
@@ -53,7 +53,7 @@ public class CSVReader {
         FlatFileItemReader<BuildingDtoCSV> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setResource(new ClassPathResource("csv/songdo_1.csv"));
         flatFileItemReader.setEncoding("UTF-8"); //인코딩 설정
-        //flatFileItemReader.setLinesToSkip(1);//첫줄 헤더 스킵
+        flatFileItemReader.setLinesToSkip(1);//첫줄 헤더 스킵
 
         /* defaultLineMapper: 읽으려는 데이터 LineMapper을 통해 Dto로 매핑 */
         DefaultLineMapper<BuildingDtoCSV> defaultLineMapper = new DefaultLineMapper<>();

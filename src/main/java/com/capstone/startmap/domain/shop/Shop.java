@@ -20,7 +20,7 @@ public class Shop {
     private String shop_name;
 
     @Column(name="shop_sales")
-    private int shop_sales;
+    private Integer shop_sales;
 
     private Integer building_sales;
 
@@ -44,9 +44,9 @@ public class Shop {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id")
-    private Franchise franchise_id;
+    private Franchise franchiseId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
-    private Building building_id;
+    private Building buildingId;
 }
