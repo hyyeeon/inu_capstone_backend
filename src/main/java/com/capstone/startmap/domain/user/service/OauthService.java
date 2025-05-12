@@ -7,6 +7,7 @@ import com.capstone.startmap.domain.user.dto.oauth.OAuthToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OauthService {
     private final UserService userService;
@@ -53,6 +55,9 @@ public class OauthService {
                 request,
                 String.class
         );
+        log.debug("Sending code to kakao: {}", code);
+        log.debug("Redirect URI: {}", redirectUri);
+
         return objectMapper.readValue(response.getBody(), OAuthToken.class);
     }
 
