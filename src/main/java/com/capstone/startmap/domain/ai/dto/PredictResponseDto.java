@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(description = "매출 예상 응답")
 public class PredictResponseDto {
+    @Schema(description = "예상 매출, 단위 만원")
     private Integer predict_sales;
-    private String description;
+    @Schema(description = "높은 가중치 3개")
+    private String importance;
 }
