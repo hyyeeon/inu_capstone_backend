@@ -7,20 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "매출 예상 응답")
-public class PredictResponseDto {
+@Schema(description = "위치 추천 응답")
+public class PredictShopsResponseDto {
+    @Schema(description = "순위")
+    private Integer rank;
     @Schema(description = "예상 매출, 단위 만원")
     private Integer predict_sales;
     @Schema(description = "높은 가중치 3개")
     private String importance;
-
-    public PredictShopsResponseDto toShopsDto(Integer rank){
-        return PredictShopsResponseDto.builder()
-                .rank(rank)
-                .predict_sales(this.predict_sales)
-                .importance(this.importance)
-                .build();
-    }
 }

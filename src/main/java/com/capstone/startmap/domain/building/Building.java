@@ -1,5 +1,7 @@
 package com.capstone.startmap.domain.building;
 
+import com.capstone.startmap.domain.ai.dto.PredictRequestDto;
+import com.capstone.startmap.exception.building.NotFoundBuildingException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -64,4 +66,45 @@ public class Building {
 
     private Integer distance_twosome;
 
+    private Integer getDistance(String name){
+        switch (name){
+            case "parisbaguette": return distance_parisbaguette;
+            case "touslesjours": return distance_touslesjours;
+            case "dunkin": return distance_dunkin;
+            case "theventi": return distance_theventi;
+            case "mega": return distance_mega;
+            case "pack": return distance_pack;
+            case "compose": return distance_compose;
+            case "ediya": return distance_ediya;
+            case "twosome": return distance_twosome;
+            default:
+                throw new NotFoundBuildingException("프랜차이즈명이 잘못되었습니다: " + name);
+        }
+    }
+
+    public PredictRequestDto toDto(String model_name){
+        Integer category = 0;
+        String name = "";
+        if(model_name.contains("bakery")){
+            category = this.similar_businesses_bakery;
+            name = model_name.substring(7);
+            System.out.println(name);
+        } else if (model_name.contains("cafe")) {
+            category = this.similar_businesses_cafe;
+            name = model_name.substring(5);
+            System.out.println(name);
+        }
+        return PredictRequestDto.builder()
+                .building_sales(this.building_sales)
+                .area_sales(this.area_sales)
+                .resident_population(this.resident_population)
+                .single_household(this.single_household)
+                .subway_users(this.subway_users)
+                .similar_businesses(category)
+                .distance_same_franchise(this.getDistance(name))
+                .nearby_schools(this.nearby_schools)
+                .nearby_tourist_attractions(this.nearby_tourist_attractions)
+                .nearby_buildings(this.nearby_buildings)
+                .build();
+    }
 }

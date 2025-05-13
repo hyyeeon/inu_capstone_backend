@@ -3,6 +3,7 @@ import joblib
 import numpy as np
 from flask import Flask, request, jsonify
 import xgboost
+import traceback
 
 app = Flask(__name__)
 
@@ -18,14 +19,13 @@ def load_model(model_name):
         model_cache[model_name] = model
         booster = model.get_booster()
         importance_cache[model_name] = booster.get_score(importance_type='weight')
-        importance1 = importance_cache[model_name]
-        print(importance1)
-        top_3 = sorted(importance1.items(), key=lambda item: item[1], reverse=True)[:3]
-        print(top_3)
-        top_keys = [key for key, _ in top_3]
-        print(top_keys)
 
-    return model_cache[model_name], importance_cache[model_name], top_3
+    model = model_cache[model_name]
+    importance1 = importance_cache[model_name]
+    top_three = sorted(importance1.items(), key=lambda item: item[1], reverse=True)[:3]
+
+    return model, importance1, top_three
+
 @app.route('/predict/<model_name>', methods=['POST'])
 def predict(model_name):
     print("요청은 잘 들어왔어")
@@ -66,6 +66,10 @@ def predict(model_name):
         return jsonify({'error': f'Model \"{model_name}\" not found.'}), 404
     except Exception as e:
         print("서버 오류:", str(e))
+        return jsonify({'error': str(e)}), 500
+    except Exception as e:
+        print("서버 오류:", str(e))
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
     
 def generate_explanation(prediction, input_data, top_3):

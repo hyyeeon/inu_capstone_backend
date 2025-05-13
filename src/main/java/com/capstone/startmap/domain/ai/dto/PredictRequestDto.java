@@ -1,7 +1,9 @@
 package com.capstone.startmap.domain.ai.dto;
 
+import com.capstone.startmap.domain.building.Building;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "매출 예상 요청")
