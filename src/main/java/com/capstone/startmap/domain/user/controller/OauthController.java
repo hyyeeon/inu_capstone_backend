@@ -2,6 +2,7 @@ package com.capstone.startmap.domain.user.controller;
 
 import com.capstone.startmap.config.security.jwt.JwtAuthenticationFilter;
 import com.capstone.startmap.domain.user.dto.oauth.KakaoProfile;
+import com.capstone.startmap.domain.user.dto.oauth.OAuthRequest;
 import com.capstone.startmap.domain.user.dto.oauth.OAuthToken;
 import com.capstone.startmap.domain.user.dto.response.LoginUserResponse;
 import com.capstone.startmap.domain.user.service.OauthService;
@@ -12,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,10 +23,10 @@ public class OauthController {
 
     private final OauthService oauthService;
 
-    @GetMapping("/callback")
-    @Operation(summary = "카카오 로그인 콜백", description = "자체 호출 함수로 사용하실 일이 없을 거예요")
-    public ResponseEntity<LoginUserResponse> callback(@RequestParam String code) throws JsonProcessingException {
-        OAuthToken token = oauthService.getKakaoOAuthToken(code);
+    @PostMapping("/callback")
+    @Operation(summary = "카카오 로그인 토큰 생성", description = "카카오 인가 코드를 입력하면 백엔드 서버 액세스토큰과 회원정보를 리턴합니다.")
+    public ResponseEntity<LoginUserResponse> callback(@RequestBody OAuthRequest request) throws JsonProcessingException {
+        OAuthToken token = oauthService.getKakaoOAuthToken(request.getCode());
         KakaoProfile profile = oauthService.getKakaoProfile(token.getAccess_token());
         LoginUserResponse response = oauthService.registerOrLoginUser(profile);
 
