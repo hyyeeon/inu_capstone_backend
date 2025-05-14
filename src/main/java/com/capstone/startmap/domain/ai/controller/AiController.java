@@ -35,7 +35,7 @@ public class AiController {
         PredictResponseDto response= networkPythonServer(model_name, input);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    @Operation(summary = "위치 추천", description = "상가 id 3개를 요청하면 예상 매출/중요 가중치 3개/순위를 응답합니다.")
     @PostMapping("/shops/{model_name}")
     public ResponseEntity<List<PredictShopsResponseDto>> PredictShops(
             @PathVariable String model_name,
@@ -69,7 +69,7 @@ public class AiController {
 
         String description = (responseBody != null) ? (String) responseBody.get("explanation") : null;
 
-        return new PredictResponseDto(predictSales, description);
+        return new PredictResponseDto(input.getBuilding_id(), predictSales, description);
     }
 
 }
