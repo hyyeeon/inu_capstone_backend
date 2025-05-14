@@ -3,15 +3,15 @@ package com.capstone.startmap.domain.franchise.api.dto;
 import com.capstone.startmap.domain.franchise.Franchise;
 import com.capstone.startmap.domain.shop.api.dto.ShopResDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class FranchiseResDto {
 
     @Schema(description = "프랜차이즈 종류")

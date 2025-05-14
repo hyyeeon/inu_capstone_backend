@@ -32,7 +32,7 @@ public class FranchiseController {
     }
     @Operation(summary = "전체 프랜차이즈 조회",
             description = "전체 프랜차이즈의 상세 정보를 조회합니다.")
-    @GetMapping("/franchise")
+    @GetMapping("/franchises")
     public ResponseEntity<List<FranchiseResDto>> getFranchises() {
         List<FranchiseResDto> franchiseList = franchiseService.showAllFranchises();
         return new ResponseEntity<>(franchiseList, HttpStatus.OK);

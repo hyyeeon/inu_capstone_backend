@@ -11,6 +11,7 @@ import com.capstone.startmap.exception.franchise.NotFoundFranchiseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,17 +25,19 @@ public class FranchiseService {
     public FranchiseResDto showFranchise(Long franchise_id) {
         Franchise franchise = franchiseRepository.findById(franchise_id).orElseThrow(()->
                 new NotFoundFranchiseException("존재하지 않는 프랜차이즈입니다."));
-        List<Shop> shops = shopRepository.findByFranchiseId(franchise);
+        List<Shop> shops = shopRepository.findAllByFranchiseId(franchise);
         List <ShopResDto> shopdtos = shops.stream()
                 .map(ShopResDto::fromShop)  // fromFranchise 메서드를 그대로 활용
                 .toList();
-        return FranchiseResDto.fromFranchise(franchise, shopdtos);
+        return franchise.toDto(shopdtos);//FranchiseResDto.fromFranchise(franchise, shopdtos);
     }
+
     public List<FranchiseResDto> showAllFranchises() {
         List<Franchise> franchises = franchiseRepository.findAll();
-
-        return franchises.stream()
-                .map(FranchiseResDto::fromFranchise)  // fromFranchise 메서드를 그대로 활용
-                .collect(Collectors.toList());
+        List<FranchiseResDto> result = new ArrayList<>();
+        for (Franchise franchise : franchises) {
+            result.add(franchise.toDto());
+        }
+        return result;
     }
 }

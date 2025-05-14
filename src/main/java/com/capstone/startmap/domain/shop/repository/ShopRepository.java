@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findByBuildingId(Building building);
-    List<Shop> findByFranchiseId(Franchise franchise);
+    List<Shop> findAllByFranchiseId(Franchise franchise);
 }
