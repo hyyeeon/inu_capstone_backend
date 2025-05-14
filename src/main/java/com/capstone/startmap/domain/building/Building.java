@@ -95,6 +95,7 @@ public class Building {
             System.out.println(name);
         }
         return PredictRequestDto.builder()
+                .building_id(this.building_id)
                 .building_sales(this.building_sales)
                 .area_sales(this.area_sales)
                 .resident_population(this.resident_population)

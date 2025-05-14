@@ -16,6 +16,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Schema(description = "매출 예상 요청")
 public class PredictRequestDto {
+    @Schema(description = "빌딩 id")
+    private Long building_id;
     @Schema(description = "상가 매출")
     private Integer building_sales;
     @Schema(description = "상권 매출")

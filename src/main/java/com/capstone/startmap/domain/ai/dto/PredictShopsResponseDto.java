@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Schema(description = "위치 추천 응답")
 public class PredictShopsResponseDto {
+    @Schema(description = "빌딩 id")
+    private Long building_id;
     @Schema(description = "순위")
     private Integer rank;
     @Schema(description = "예상 매출, 단위 만원")
