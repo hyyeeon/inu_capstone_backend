@@ -50,4 +50,8 @@ public class BuildingService {
                 new NotFoundBuildingException("존재하지 않는 건물입니다."));
         return building.toDto(model_name);
     }
+    public Building findById(Long building_id){
+        return buildingRepository.findById(building_id).orElseThrow(()->
+                new NotFoundBuildingException("존재하지 않는 건물입니다."));
+    }
 }

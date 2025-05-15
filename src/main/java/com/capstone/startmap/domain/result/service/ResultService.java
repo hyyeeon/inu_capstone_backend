@@ -1,12 +1,18 @@
 package com.capstone.startmap.domain.result.service;
 
 import com.capstone.startmap.domain.result.Result;
+import com.capstone.startmap.domain.result.ResultType;
+import com.capstone.startmap.domain.result.api.dto.ResultCreateDto;
 import com.capstone.startmap.domain.result.api.dto.ResultResDto;
 import com.capstone.startmap.domain.result.repository.ResultRepository;
+import com.capstone.startmap.domain.user.User;
 import com.capstone.startmap.exception.Result.NotFoundResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +23,11 @@ public class ResultService {
         Result result = resultRepository.findById(shop_id).orElseThrow(()->
                 new NotFoundResultException("존재하지 않는 검색 결과 입니다."));
         return ResultResDto.fromResult(result);
+    }
+
+    public Result createResult(ResultCreateDto dto){
+        Result result = dto.toEntity();
+        result = resultRepository.save(result);
+        return result;
     }
 }

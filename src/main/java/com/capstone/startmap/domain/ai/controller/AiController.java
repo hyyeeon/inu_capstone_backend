@@ -1,5 +1,6 @@
 package com.capstone.startmap.domain.ai.controller;
 
+import com.capstone.startmap.config.CustomUserDetails;
 import com.capstone.startmap.domain.ai.dto.*;
 import com.capstone.startmap.domain.ai.service.AiService;
 import com.capstone.startmap.domain.franchise.api.dto.FranchiseDto;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,44 +37,54 @@ public class AiController {
 //        return new ResponseEntity<>(response, HttpStatus.OK);
 //    }
     @Operation(summary = "위치 추천", description = "상가 id 3개를 요청하면 예상 매출/중요 가중치 3개/순위를 응답합니다.")
-    @PostMapping("/shops")
-    public ResponseEntity<List<PredictShopsResponseDto>> PredictShops(
+    @PostMapping("/locations")
+    public ResponseEntity<List<PredictLocationResponseDto>> PredictLocations(
             //@PathVariable String model_name,
-            @RequestBody PredictShopRequestDto input
+            @RequestBody PredictLocationRequestDto input, @AuthenticationPrincipal CustomUserDetails userDetails
             ) {
         FranchiseDto franchise = aiService.getFranchiseName(input.getFranchise_id());
         List<PredictRequestDto> buildings = aiService.getBuildingsInfo(input.getBuilding_ids(), franchise.getFranchise_name());
         List<PredictResponseDto> py_responses = new ArrayList<>();
-        List<PredictShopsResponseDto> response = new ArrayList<>();
+        List<PredictLocationResponseDto> response = new ArrayList<>();
+        Long userId = userDetails.getId();
+        //파이썬 서버에서 계산
         for (PredictRequestDto dto :buildings) {
             PredictResponseDto result = networkPythonServer(franchise, dto);
             py_responses.add(result);
         }
+        //정렬 및 랭크 매기기
         py_responses.sort(Comparator.comparingInt(PredictResponseDto::getPredict_sales).reversed());
         for (PredictResponseDto dto: py_responses) {
-            response.add(dto.toShopsDto(py_responses.indexOf(dto)+1));
+            response.add(dto.toLocationsDto(py_responses.indexOf(dto)+1));
         }
+        //결과 저장
+        aiService.saveLocationResult(userId, franchise.getFranchise_id(), response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "프랜차이즈 추천", description = "상가 id 3개를 요청하면 예상 매출/중요 가중치 3개/순위를 응답합니다.")
     @PostMapping("/franchises")
     public ResponseEntity<List<PredictFranchiseResponseDto>> predictFranchises(
-            @RequestBody PredictFranchiseRequestDto input
+            @RequestBody PredictFranchiseRequestDto input, @AuthenticationPrincipal CustomUserDetails userDetails
             ) {
         List<FranchiseDto> franchises = aiService.getFranchisesNames(input.getFranchise_ids());
         List<PredictResponseDto> py_response = new ArrayList<>();
         List<PredictFranchiseResponseDto> response = new ArrayList<>();
         Long buildingId = input.getBuilding_id();
+        Long userId = userDetails.getId();
+        //파이썬 서버에서 매출 계산
         for (FranchiseDto dto : franchises) {
             PredictRequestDto building = aiService.getBuildingInfo(buildingId, dto.getFranchise_name());
             PredictResponseDto result  = networkPythonServer(dto, building);
             py_response.add(result);
         }
+        //정렬 및 랭크 세팅
         py_response.sort(Comparator.comparingInt(PredictResponseDto::getPredict_sales).reversed());
         for (PredictResponseDto dto: py_response) {
             response.add(dto.toFranchisesDto(py_response.indexOf(dto)+1));
         }
+        //결과 저장
+        aiService.saveFranchiseResult(userId, buildingId, response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

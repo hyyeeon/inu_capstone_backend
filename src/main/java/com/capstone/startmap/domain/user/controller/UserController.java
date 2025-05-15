@@ -3,16 +3,12 @@ package com.capstone.startmap.domain.user.controller;
 import com.capstone.startmap.config.CustomUserDetails;
 import com.capstone.startmap.config.security.jwt.JwtAuthenticationFilter;
 import com.capstone.startmap.domain.refreshtoken.dto.request.CreateRefreshTokenRequest;
-import com.capstone.startmap.domain.user.User;
 import com.capstone.startmap.domain.user.dto.request.CreateUserRequest;
 import com.capstone.startmap.domain.user.dto.request.DeleteUserRequest;
 import com.capstone.startmap.domain.user.dto.request.LoginUserRequest;
 import com.capstone.startmap.domain.user.dto.response.CreateUserResponse;
 import com.capstone.startmap.domain.user.dto.response.LoginUserResponse;
 import com.capstone.startmap.domain.user.service.UserService;
-import com.capstone.startmap.util.validation.EmailGroup;
-import com.capstone.startmap.util.validation.PasswordGroup;
-import com.capstone.startmap.util.validation.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -32,7 +28,6 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final RequestValidator requestValidator;
 
     @Operation(summary = "자체 회원가입", description = "카카오 에러 고치다가 만든 자체 회원가입입니다.. 꼭 사용 안하셔도 됩니다")
     @PostMapping("/signup")
@@ -79,23 +74,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<String> delete(@RequestBody DeleteUserRequest request,
                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
-        Optional<User> findUser = userService.findUserById(userDetails.getId());
-        User user = findUser.get();
-
-        if (user.getKakao_id() != null && !user.getKakao_id().isEmpty()) {
-            requestValidator.validate(request, EmailGroup.class);  // EmailGroup 검증 수행
-            userService.deleteUserByKakaoId(request.getKakao_id(), userDetails.getId());
-
-            return ResponseEntity.ok("회원 탈퇴가 처리되었습니다.");
-
-        } else if (user.getKakao_id() == null) {
-            requestValidator.validate(request, PasswordGroup.class);  // PasswordGroup 검증 수행
-            userService.deleteUserByPassword(request.getPassword(), userDetails.getId());
-
-            return ResponseEntity.ok("회원 탈퇴가 처리되었습니다.");
-
-        } else {
-            return ResponseEntity.badRequest().body("필수 입력 사항이 누락되었습니다.");
-        }
+        String response = userService.delete(userDetails.getId(), request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

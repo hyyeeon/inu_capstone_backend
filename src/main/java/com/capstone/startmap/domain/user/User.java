@@ -1,7 +1,10 @@
 package com.capstone.startmap.domain.user;
 
+import com.capstone.startmap.domain.result.Result;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +26,9 @@ public class User {
     private String email;
 
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Result> results;
 
     public static User of(String nickname, String email, String password, String kakao_id) {
         return User.builder()

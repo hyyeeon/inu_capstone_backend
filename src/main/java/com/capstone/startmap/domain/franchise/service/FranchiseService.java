@@ -1,6 +1,5 @@
 package com.capstone.startmap.domain.franchise.service;
 
-import com.capstone.startmap.domain.building.api.dto.BuildingResDto;
 import com.capstone.startmap.domain.franchise.Franchise;
 import com.capstone.startmap.domain.franchise.api.dto.FranchiseDto;
 import com.capstone.startmap.domain.franchise.api.dto.FranchiseResDto;
@@ -14,11 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
 public class FranchiseService {
     private final FranchiseRepository franchiseRepository;
     private final ShopRepository shopRepository;
@@ -58,5 +55,9 @@ public class FranchiseService {
                 new NotFoundFranchiseException("존재하지 않는 프랜차이즈입니다."));
         String name = franchise.getFranchise_type()+"_"+franchise.getFranchise_name();
         return new FranchiseDto(id, name);
+    }
+    public Franchise findById(Long id){
+        return franchiseRepository.findById(id).orElseThrow(()->
+                new NotFoundFranchiseException("프랜차이즈가 존재하지 않습니다."));
     }
 }

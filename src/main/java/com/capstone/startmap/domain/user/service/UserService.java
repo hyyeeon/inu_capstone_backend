@@ -2,6 +2,7 @@ package com.capstone.startmap.domain.user.service;
 
 import com.capstone.startmap.domain.refreshtoken.RefreshToken;
 import com.capstone.startmap.domain.user.User;
+import com.capstone.startmap.domain.user.dto.request.DeleteUserRequest;
 import com.capstone.startmap.domain.user.events.UserDeletedEvent;
 import com.capstone.startmap.domain.user.repository.UserRepository;
 import com.capstone.startmap.domain.refreshtoken.repository.RefreshTokenRepository;
@@ -14,9 +15,13 @@ import com.capstone.startmap.exception.user.DuplicatedNicknameException;
 import com.capstone.startmap.exception.user.NotFoundUserException;
 import com.capstone.startmap.exception.user.EmailMismatchException;
 import com.capstone.startmap.exception.user.WrongPasswordException;
+import com.capstone.startmap.util.validation.EmailGroup;
+import com.capstone.startmap.util.validation.PasswordGroup;
+import com.capstone.startmap.util.validation.RequestValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -42,6 +47,7 @@ public class UserService {
     private final JwtTokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final RequestValidator requestValidator;
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -178,7 +184,27 @@ public class UserService {
         }
     }
 
-    public Optional<User> findUserById(Long userId) {
-        return userRepository.findById(userId);
+    public String delete(Long userId, DeleteUserRequest request){
+        User user = findUserById(userId);
+
+        if (user.getKakao_id() != null && !user.getKakao_id().isEmpty()) {
+            requestValidator.validate(request, EmailGroup.class);  // EmailGroup 검증 수행
+            deleteUserByKakaoId(request.getKakao_id(), userId);
+
+            return "회원 탈퇴가 처리되었습니다.";
+
+        } else if (user.getKakao_id() == null) {
+            requestValidator.validate(request, PasswordGroup.class);  // PasswordGroup 검증 수행
+            deleteUserByPassword(request.getPassword(), userId);
+
+            return "회원 탈퇴가 처리되었습니다.";
+
+        } else {
+            return "필수 입력 사항이 누락되었습니다.";
+        }
+    }
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(()->
+                new NotFoundUserException("유저를 찾을 수 없습니다."));
     }
 }
