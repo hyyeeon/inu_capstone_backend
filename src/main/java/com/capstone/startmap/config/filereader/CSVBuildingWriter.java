@@ -10,6 +10,10 @@ import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +27,14 @@ public class CSVBuildingWriter implements ItemWriter<BuildingDtoCSV> {
     @Override
     public void write(Chunk<? extends BuildingDtoCSV> chunk) throws Exception {
         log.info("파일쓰기시작");
+
         List<Building> buildingList = new ArrayList<>();
 
         chunk.forEach(getBuildingDtoCSV -> {
             Building building = getBuildingDtoCSV.toEntity();
-            buildingList.add(building);
+            if (!buildingRepository.existsByZone(building.getZone())) {
+                buildingList.add(building);
+            }
         });
 
         buildingRepository.saveAll(buildingList);

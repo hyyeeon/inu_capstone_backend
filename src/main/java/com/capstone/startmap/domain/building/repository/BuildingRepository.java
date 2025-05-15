@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface BuildingRepository extends JpaRepository<Building, Long> {
 
+    boolean existsByZone(String zone);
 }

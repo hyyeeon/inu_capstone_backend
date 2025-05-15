@@ -12,4 +12,6 @@ import java.util.List;
 public interface ShopRepository extends JpaRepository<Shop, Long> {
     List<Shop> findByBuildingId(Building building);
     List<Shop> findAllByFranchiseId(Franchise franchise);
+
+    boolean existsByShopName(String shopName);
 }

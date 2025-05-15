@@ -8,6 +8,7 @@ import lombok.*;
 @Builder
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Building {
@@ -66,6 +67,9 @@ public class Building {
 
     private Integer distance_twosome;
 
+    public Building(Long id) {
+        this.building_id = id;
+    }
     private Integer getDistance(String name){
         switch (name){
             case "parisbaguette": return distance_parisbaguette;

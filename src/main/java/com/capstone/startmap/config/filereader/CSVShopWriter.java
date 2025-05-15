@@ -1,5 +1,7 @@
 package com.capstone.startmap.config.filereader;
 
+import com.capstone.startmap.domain.building.repository.BuildingRepository;
+import com.capstone.startmap.domain.franchise.repository.FranchiseRepository;
 import com.capstone.startmap.domain.shop.Shop;
 import com.capstone.startmap.domain.shop.dto.ShopDtoCSV;
 import com.capstone.startmap.domain.shop.repository.ShopRepository;
@@ -18,6 +20,8 @@ import java.util.List;
 public class CSVShopWriter implements ItemWriter<ShopDtoCSV> {
 
     private final ShopRepository shopRepository;
+    private final BuildingRepository buildingRepository;
+    private final FranchiseRepository franchiseRepository;
 
     @Override
     public void write(Chunk<? extends ShopDtoCSV> chunk) throws Exception {
@@ -25,8 +29,10 @@ public class CSVShopWriter implements ItemWriter<ShopDtoCSV> {
         List<Shop> shopList = new ArrayList<>();
 
         chunk.forEach(getShopDtoCSV -> {
-            Shop shop = getShopDtoCSV.toEntity();
-            shopList.add(shop);
+            Shop shop = getShopDtoCSV.toEntity(buildingRepository, franchiseRepository);
+            if (!shopRepository.existsByShopName(shop.getShopName())) {
+                shopList.add(shop);
+            }
         });
 
         shopRepository.saveAll(shopList);

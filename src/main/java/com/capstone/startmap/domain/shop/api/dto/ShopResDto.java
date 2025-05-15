@@ -30,7 +30,7 @@ public class ShopResDto {
         ShopResDto dto = new ShopResDto(shop);
         dto.building_id = null;
         dto.franchise_id = null;
-        dto.shop_name = shop.getShop_name();
+        dto.shop_name = shop.getShopName();
         dto.shop_sales = shop.getShop_sales();
 
         return dto;
