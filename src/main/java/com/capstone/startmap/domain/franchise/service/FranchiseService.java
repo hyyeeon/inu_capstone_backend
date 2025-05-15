@@ -2,6 +2,7 @@ package com.capstone.startmap.domain.franchise.service;
 
 import com.capstone.startmap.domain.building.api.dto.BuildingResDto;
 import com.capstone.startmap.domain.franchise.Franchise;
+import com.capstone.startmap.domain.franchise.api.dto.FranchiseDto;
 import com.capstone.startmap.domain.franchise.api.dto.FranchiseResDto;
 import com.capstone.startmap.domain.franchise.repository.FranchiseRepository;
 import com.capstone.startmap.domain.shop.Shop;
@@ -39,5 +40,23 @@ public class FranchiseService {
             result.add(franchise.toDto());
         }
         return result;
+    }
+
+    public List<FranchiseDto> getFranchisesname(List<Long> ids){
+        List<FranchiseDto> result = new ArrayList<>();
+        for (Long id : ids) {
+            Franchise franchise = franchiseRepository.findById(id).orElseThrow(()->
+                    new NotFoundFranchiseException("존재하지 않는 프랜차이즈입니다."));
+            String name = franchise.getFranchise_type()+"_"+franchise.getFranchise_name();
+            System.out.println(name);
+            result.add(new FranchiseDto(id, name));
+        }
+        return result;
+    }
+    public FranchiseDto getFranchisename(Long id){
+        Franchise franchise = franchiseRepository.findById(id).orElseThrow(()->
+                new NotFoundFranchiseException("존재하지 않는 프랜차이즈입니다."));
+        String name = franchise.getFranchise_type()+"_"+franchise.getFranchise_name();
+        return new FranchiseDto(id, name);
     }
 }
