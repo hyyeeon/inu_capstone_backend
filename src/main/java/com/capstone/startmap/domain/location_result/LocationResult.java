@@ -1,5 +1,7 @@
 package com.capstone.startmap.domain.location_result;
 
+import com.capstone.startmap.domain.ai.dto.PredictFranchiseResponseDto;
+import com.capstone.startmap.domain.ai.dto.PredictLocationResponseDto;
 import com.capstone.startmap.domain.building.Building;
 import com.capstone.startmap.domain.result.Result;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,4 +36,12 @@ public class LocationResult {
     @JoinColumn(name = "building_id")
     private Building building;
 
+    public PredictLocationResponseDto toDto(){
+        return PredictLocationResponseDto.builder()
+                .rank(this.rank)
+                .predict_sales(this.predict_sales)
+                .importance(this.importance)
+                .building_id(this.building.getBuilding_id())
+                .build();
+    }
 }

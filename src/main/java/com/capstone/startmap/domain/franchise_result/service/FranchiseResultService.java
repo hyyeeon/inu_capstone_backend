@@ -12,6 +12,7 @@ import com.capstone.startmap.exception.franchise_result.NotFoundFranchiseResultE
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,5 +37,13 @@ public class FranchiseResultService {
         FranchiseResult franchiseResult = predictDto.toEntity(dto);
         franchiseResult = franchiseResultRepository.save(franchiseResult);
         return franchiseResult.getFranchise_result_id();
+    }
+    public List<PredictFranchiseResponseDto> getAllFranchiseResult(Result result){
+        List<FranchiseResult> franResult = franchiseResultRepository.findAllByResult(result);
+        List<PredictFranchiseResponseDto> response = new ArrayList<>();
+        for (FranchiseResult rst :franResult) {
+            response.add(rst.toDto());
+        }
+        return response;
     }
 }

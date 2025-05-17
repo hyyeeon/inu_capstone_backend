@@ -1,5 +1,6 @@
 package com.capstone.startmap.domain.franchise_result;
 
+import com.capstone.startmap.domain.ai.dto.PredictFranchiseResponseDto;
 import com.capstone.startmap.domain.franchise.Franchise;
 import com.capstone.startmap.domain.result.Result;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,5 +35,12 @@ public class FranchiseResult {
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
-
+    public PredictFranchiseResponseDto toDto(){
+        return PredictFranchiseResponseDto.builder()
+                .franchise_id(this.franchise.getFranchise_id())
+                .importance(this.importance)
+                .predict_sales(this.predict_sales)
+                .rank(this.rank)
+                .build();
+    }
 }

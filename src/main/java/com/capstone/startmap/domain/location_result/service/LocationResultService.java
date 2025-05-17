@@ -1,6 +1,8 @@
 package com.capstone.startmap.domain.location_result.service;
 
+import com.capstone.startmap.domain.ai.dto.PredictFranchiseResponseDto;
 import com.capstone.startmap.domain.ai.dto.PredictLocationResponseDto;
+import com.capstone.startmap.domain.franchise_result.FranchiseResult;
 import com.capstone.startmap.domain.location_result.LocationResult;
 import com.capstone.startmap.domain.location_result.api.dto.LocationResultCreateDto;
 import com.capstone.startmap.domain.location_result.api.dto.LocationResultResDto;
@@ -12,6 +14,7 @@ import com.capstone.startmap.exception.location_result.NotFoundLocationResultExc
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,5 +36,14 @@ public class LocationResultService {
         LocationResult locationResult = predictDto.toEntity(dto);
         locationResult = locationResultRepository.save(locationResult);
         return locationResult.getLocation_result_id();
+    }
+
+    public List<PredictLocationResponseDto> getAllLocationResult(Result result){
+        List<LocationResult> locationResult = locationResultRepository.findAllByResult(result);
+        List<PredictLocationResponseDto> response = new ArrayList<>();
+        for (LocationResult rst :locationResult) {
+            response.add(rst.toDto());
+        }
+        return response;
     }
 }
