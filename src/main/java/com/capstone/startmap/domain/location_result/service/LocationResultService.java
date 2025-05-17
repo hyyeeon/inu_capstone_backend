@@ -17,8 +17,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LocationResultService {
-    private LocationResultRepository locationResultRepository;
-    private ResultRepository resultRepository;
+    private final LocationResultRepository locationResultRepository;
+    private final ResultRepository resultRepository;
 
     public LocationResultResDto showLocationResult(Long search_id) {
         Result result = resultRepository.findById(search_id).orElseThrow(()->

@@ -7,6 +7,7 @@ import com.capstone.startmap.domain.location_result.LocationResult;
 import jakarta.persistence.*;
 import lombok.*;
 import com.capstone.startmap.domain.user.User;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,9 +42,9 @@ public class Result {
     @JoinColumn(name = "building_id")
     private Building building;
 
-    @OneToMany(mappedBy = "result")
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LocationResult> location_results;
 
-    @OneToMany(mappedBy = "result")
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FranchiseResult> franchise_results;
 }

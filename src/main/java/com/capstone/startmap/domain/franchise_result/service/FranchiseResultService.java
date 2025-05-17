@@ -18,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class FranchiseResultService {
-    private FranchiseResultRepository franchiseResultRepository;
-    private ResultRepository resultRepository;
+    private final FranchiseResultRepository franchiseResultRepository;
+    private final ResultRepository resultRepository;
 
     public FranchiseResultResDto showFranchiseResult(Long search_id) {
         Result result = resultRepository.findById(search_id).orElseThrow(()->
