@@ -1,6 +1,6 @@
 package com.capstone.startmap.domain.franchise_result.api.dto;
 
-import com.capstone.startmap.domain.franchise_result.Franchise_result;
+import com.capstone.startmap.domain.franchise_result.FranchiseResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,13 +15,13 @@ public class FranchiseResultResDto {
     @Schema(description = "프랜차이즈 검색 결과 개별 dto 리스트")
     private List<FranchiseIndResultResDto> franchiseResult_list;
 
-    public FranchiseResultResDto(List<Franchise_result> franchiseResults) {
+    public FranchiseResultResDto(List<FranchiseResult> franchiseResults) {
         this.franchiseResult_list = franchiseResults.stream()
                 .map(FranchiseIndResultResDto::fromFranchiseResult)
                 .toList();
     }
 
-    public static FranchiseResultResDto fromFranchiseResultList(List<Franchise_result> franchiseResults) {
+    public static FranchiseResultResDto fromFranchiseResultList(List<FranchiseResult> franchiseResults) {
         return new FranchiseResultResDto(franchiseResults);
     }
 }

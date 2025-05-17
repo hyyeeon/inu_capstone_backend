@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "위치 예상 요청")
-public class PredictShopRequestDto {
+public class PredictLocationRequestDto {
     @Schema(description = "프랜차이즈 id")
     private Long franchise_id;
     @Schema(description = "상가 건물 id 최대 3개")

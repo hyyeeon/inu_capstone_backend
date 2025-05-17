@@ -1,34 +1,31 @@
 package com.capstone.startmap.domain.result.api.dto;
 
-import com.capstone.startmap.domain.result.Result;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import lombok.*;
+import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResultResDto {
-
-    @Schema(description = "프랜차이즈 ID")
-    private Long franchise_id;
+    @Schema(description = "검색 ID")
+    private Long result_id;
 
     @Schema(description = "검색 날짜")
-    private Date date;
+    private LocalDate date;
 
     @Schema(description = "상가 ID")
     private Long building_id;
 
-    @Schema(description = "검색 ID")
-    private Long result_id;
+    @Schema(description = "프랜차이즈 ID")
+    private Long franchise_id;
 
-    public ResultResDto(Result result) {
-
-    }
-
-    public static ResultResDto fromResult(Result result) {
-        return new ResultResDto(result);
-    }
+//    public ResultResDto(Result result) {
+//
+//    }
+//
+//    public static ResultResDto fromResult(Result result) {
+//        return new ResultResDto(result);
+//    }
 }

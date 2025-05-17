@@ -1,9 +1,7 @@
 package com.capstone.startmap.domain.ai.dto;
 
-import com.capstone.startmap.domain.franchise.api.dto.FranchiseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,8 +19,8 @@ public class PredictResponseDto {
     @Schema(description = "높은 가중치 3개")
     private String importance;
 
-    public PredictShopsResponseDto toShopsDto(Integer rank){
-        return PredictShopsResponseDto.builder()
+    public PredictLocationResponseDto toLocationsDto(Integer rank){
+        return PredictLocationResponseDto.builder()
                 .building_id(this.building_id)
                 .rank(rank)
                 .predict_sales(this.predict_sales)
