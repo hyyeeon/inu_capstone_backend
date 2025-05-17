@@ -20,7 +20,7 @@ public class FranchiseResult {
     @Column(name = "predict_sales", nullable=false)
     private Integer predict_sales;
 
-    @Column(name = "rank", nullable = false)
+    @Column(name="`rank`", nullable = false)
     private Integer rank;
 
     @ManyToOne(fetch = FetchType.LAZY)

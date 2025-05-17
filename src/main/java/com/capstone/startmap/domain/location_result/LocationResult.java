@@ -20,7 +20,7 @@ public class LocationResult {
     @Column(name = "predict_sales", nullable = false)
     private Integer predict_sales;
 
-    @Column(name="rank", nullable = false)
+    @Column(name="`rank`", nullable = false)
     private Integer rank;
 
     @Schema(description = "높은 가중치 3개")
