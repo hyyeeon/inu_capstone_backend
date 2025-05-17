@@ -47,11 +47,9 @@ public class ResultService {
     }
     public List<PredictFranchiseResponseDto> getFranchiseResult(Long user_id, Long result_id) {
         User user = userService.findUserById(user_id);
-        Result result = resultRepository.findById(result_id).orElseThrow(()->
-                new NotFoundResultException("존재하지 않는 검색 결과 입니다."));
-        if (result.getUser() != user){
-            new NotFoundResultException("해당 유저의 결과가 아닙니다.");
-        }
+        Result result = resultRepository.findByResultIdAndUser(result_id, user).orElseThrow(()->
+                new NotFoundResultException("결과가 없습니다. 회원정보와 결과 id를 확인하세요."));
+
         if (result.getType() != ResultType.FRANCHISE){
             new NotFoundResultException("결과 분류가 잘못되었습니다. 프랜차이즈 검색 결과를 요청해 주세요.");
         }
@@ -61,11 +59,8 @@ public class ResultService {
     }
     public List<PredictLocationResponseDto> getLocationResult(Long user_id, Long result_id) {
         User user = userService.findUserById(user_id);
-        Result result = resultRepository.findById(result_id).orElseThrow(()->
-                new NotFoundResultException("존재하지 않는 검색 결과 입니다."));
-        if (result.getUser() != user){
-            new NotFoundResultException("해당 유저의 결과가 아닙니다.");
-        }
+        Result result = resultRepository.findByResultIdAndUser(result_id, user).orElseThrow(()->
+                new NotFoundResultException("결과가 없습니다. 회원정보와 결과 id를 확인하세요."));
         if (result.getType() != ResultType.FRANCHISE){
             new NotFoundResultException("결과 분류가 잘못되었습니다. 위치 추천 검색 결과를 요청해 주세요.");
         }

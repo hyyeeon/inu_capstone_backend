@@ -21,7 +21,7 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "result_id", nullable = false)
-    private Long result_id;
+    private Long resultId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -51,14 +51,14 @@ public class Result {
     public ResultResDto toDto(ResultType type){
         if (type == ResultType.LOCATION){
             return ResultResDto.builder()
-                    .result_id(this.result_id)
+                    .result_id(this.resultId)
                     .date(this.date)
                     .building_id(this.building.getBuilding_id())
                     .franchise_id(null)
                     .build();
         } else {
             return ResultResDto.builder()
-                    .result_id(this.result_id)
+                    .result_id(this.resultId)
                     .date(this.date)
                     .franchise_id(this.franchise.getFranchise_id())
                     .building_id(null)
