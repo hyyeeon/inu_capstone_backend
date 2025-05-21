@@ -54,14 +54,14 @@ public class Result {
                     .result_id(this.resultId)
                     .date(this.date)
                     .building_id(this.building.getBuilding_id())
-                    .franchise_id(null)
+                    .franchise_id(this.franchise.getFranchise_id())
                     .build();
         } else {
             return ResultResDto.builder()
                     .result_id(this.resultId)
                     .date(this.date)
                     .franchise_id(this.franchise.getFranchise_id())
-                    .building_id(null)
+                    .building_id(this.building.getBuilding_id())
                     .build();
         }
     }

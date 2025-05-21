@@ -14,14 +14,14 @@ public class LocationResultController {
     private final LocationResultService locationResultService;
     public LocationResultController(LocationResultService locationResultService) { this.locationResultService = locationResultService; }
 
-    @Operation(summary = "위치 검색 상세 결과",
-            description = "searchId를 이용해 검색 결과 중 위치 검색 결과의 상세를 조회합니다.")
-    @GetMapping("/locationResult/{searchId}")
-    public ResponseEntity<LocationResultResDto> getLocationResult(
-            @Parameter(description = "검색 결과의 ID")
-            @PathVariable Long searchId) {
-        LocationResultResDto locationResultResDto = locationResultService.showLocationResult(searchId);
-
-        return new ResponseEntity<>(locationResultResDto, HttpStatus.OK);
-    }
+//    @Operation(summary = "위치 검색 상세 결과",
+//            description = "searchId를 이용해 검색 결과 중 위치 검색 결과의 상세를 조회합니다.")
+//    @GetMapping("/locationResult/{searchId}")
+//    public ResponseEntity<LocationResultResDto> getLocationResult(
+//            @Parameter(description = "검색 결과의 ID")
+//            @PathVariable Long searchId) {
+//        LocationResultResDto locationResultResDto = locationResultService.showLocationResult(searchId);
+//
+//        return new ResponseEntity<>(locationResultResDto, HttpStatus.OK);
+//    }
 }

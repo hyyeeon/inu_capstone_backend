@@ -14,14 +14,14 @@ public class FranchiseResultController {
     private final FranchiseResultService franchiseResultService;
     public FranchiseResultController(FranchiseResultService franchiseResultService) {this.franchiseResultService = franchiseResultService; }
 
-    @Operation(summary = "프랜차이즈 검색 상세 결과",
-            description = "searchId를 이용해 검색 결과 중 프랜차이즈 검색 결과의 상세를 조회합니다.")
-    @GetMapping("/franchiseResult/{searchId}")
-    public ResponseEntity<FranchiseResultResDto> getFranchiseResult(
-            @Parameter(description = "검색 결과의 ID")
-            @PathVariable long searchId) {
-        FranchiseResultResDto franchiseResultResDto = franchiseResultService.showFranchiseResult(searchId);
-
-        return new ResponseEntity<>(franchiseResultResDto, HttpStatus.OK);
-    }
+//    @Operation(summary = "프랜차이즈 검색 상세 결과",
+//            description = "searchId를 이용해 검색 결과 중 프랜차이즈 검색 결과의 상세를 조회합니다.")
+//    @GetMapping("/franchiseResult/{searchId}")
+//    public ResponseEntity<FranchiseResultResDto> getFranchiseResult(
+//            @Parameter(description = "검색 결과의 ID")
+//            @PathVariable long searchId) {
+//        FranchiseResultResDto franchiseResultResDto = franchiseResultService.showFranchiseResult(searchId);
+//
+//        return new ResponseEntity<>(franchiseResultResDto, HttpStatus.OK);
+//    }
 }
